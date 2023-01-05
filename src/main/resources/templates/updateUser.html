@@ -9,7 +9,7 @@
 <h1>Update User</h1>
 <br>
 
-<form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}" >
+<form th:method="PATCH" th:action="@{/admin/users/{id}(id=${user.getId()})}" th:object="${user}" >
 
   <label for="name">Enter a name:</label>
   <input type="text" th:field="*{name}" id="name">
@@ -19,6 +19,7 @@
   <br>
   <label for="email">Enter email:</label>
   <input type="text" th:field="*{email}" id="email">
+
   <input type="hidden" th:field="*{id}" >
 
   <br>
@@ -26,5 +27,10 @@
   <input type="submit" value="update User"/>
 
 </form>
+
+<br>
+
+<input type="button" value="logout"
+       onclick="window.location.href='/logout'"/>
 
 </body>
