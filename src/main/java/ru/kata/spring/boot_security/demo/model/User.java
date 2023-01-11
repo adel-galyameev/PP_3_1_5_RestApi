@@ -18,10 +18,10 @@ public class User implements UserDetails {
     private Long id;
 
     @Column
-    private String name;
+    private String username;
 
     @Column
-    private String username;
+    private String name;
 
     @Column
     private int age;
@@ -41,12 +41,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, int age, String email,String password, String name) {
-        this.username = username;
+    public User(int age, String email,String password, String name, String username) {
         this.age = age;
         this.email = email;
         this.password = password;
         this.name = name;
+        this.username = username;
     }
 
     public Long getId() {
@@ -57,10 +57,6 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-
-    public void setUsername(String name) {
-        this.username = username;
-    }
 
     public int getAge() {
         return age;
@@ -100,6 +96,15 @@ public class User implements UserDetails {
     }
 
     @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
@@ -109,10 +114,6 @@ public class User implements UserDetails {
         return password;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -132,6 +133,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String roleToString() {
+        StringBuilder stringBuilder = new StringBuilder();
+       for (Role r :roles) {
+          stringBuilder.append(r.toString());
+          stringBuilder.append(" ");
+       }
+       return stringBuilder.toString();
     }
 }
 

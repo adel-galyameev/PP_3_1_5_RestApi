@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -21,10 +23,12 @@ public class AdminController {
     }
 
     @GetMapping("/users")
-    public String getUsers(ModelMap model) {
-
+    public String getUsers(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("user", user);
         model.addAttribute("users", userService.listUsers());
-        return "users";
+        return "users1";
     }
     @GetMapping("/new")
     public String addNewUser(Model model) {
@@ -38,12 +42,6 @@ public class AdminController {
         userService.save(user);
         return "redirect:/admin/users";
     }
-    @GetMapping("/users/{id}")
-    public String getUser(Model model,@PathVariable("id") Long id) {
-        model.addAttribute("user", userService.getUser(id));
-        return "updateUser";
-    }
-
     @PatchMapping("/users/{id}")
     public String update (@ModelAttribute("user") User user) {
         userService.update(user);
@@ -55,6 +53,5 @@ public class AdminController {
         userService.delete(id);
         return "redirect:/admin/users";
     }
-
 
 }
