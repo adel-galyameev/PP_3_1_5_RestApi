@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"s
       lang="en"
       style="height: 100%">
 <head>
@@ -20,9 +20,9 @@
 
     <div class="row w-100 h-100">
 
-        <div style="background-color: white; padding-left: 0; padding-top: 10px; padding-right: 0" class="col-sm">
-            <div>
-                <button style="border: 0; padding-right: 155px; background-color: white; color: blue" type="button" class="btn btn-outline-secondary btn-block "onclick="window.location.href='/admin/users'">Admin</button>
+        <div  style="background-color: white; padding-left: 0; padding-top: 10px; padding-right: 0" class="col-sm">
+            <div th:each="role: ${user.getRoles()}" th:if="${role.toString()}=='ADMIN'">
+                <a style="border: 0; padding-right: 155px; background-color: white; color: blue" type="button" class="btn btn-outline-secondary btn-block " href="/admin/users">Admin</a>
             </div>
 
             <button style="padding-right: 170px" class="btn btn-primary btn-block" onclick="window.location.href='/user'">User</button>
@@ -41,7 +41,7 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th scope="col">id</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">First name</th>
                                 <th scope="col">Last name</th>
                                 <th scope="col">age</th>

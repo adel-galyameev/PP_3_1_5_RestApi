@@ -5,9 +5,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 
@@ -17,9 +17,11 @@ public class AdminController {
 
     private final UserService userService;
 
-    @Autowired
-    public AdminController(UserService userService) {
+    private RoleService roleService;
+
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/users")
@@ -28,15 +30,10 @@ public class AdminController {
         User user = (User) authentication.getPrincipal();
         model.addAttribute("user", user);
         model.addAttribute("users", userService.listUsers());
+        model.addAttribute("roleAll", roleService.getRoles());
         return "users1";
     }
-    @GetMapping("/new")
-    public String addNewUser(Model model) {
-        model.addAttribute("user",new User());
 
-        return "user_info";
-
-    }
     @PostMapping("/userAdd")
     public String create(@ModelAttribute("user") User user) {
         userService.save(user);

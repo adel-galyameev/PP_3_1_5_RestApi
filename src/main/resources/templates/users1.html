@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en" style="height: 100%">
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en" style="height: 100%">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -46,7 +46,7 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th scope="col">id</th>
+                                <th scope="col">ID</th>
                                 <th scope="col">First name</th>
                                 <th scope="col">Last name</th>
                                 <th scope="col">age</th>
@@ -85,41 +85,46 @@
                                                         <div class="form-group required">
                                                             <div class="controls">
 
-                                                                <label for="id1"><b>ID</b></label>
+                                                                <label for="id_edit"><b>ID</b></label>
                                                                 <input th:name="id" th:value="${user.id}"
                                                                        th:type="number "
-                                                                       class="form-control" id="id1"
+                                                                       class="form-control" id="id_edit"
                                                                        disabled/>
                                                                 <br>
-                                                                <label for="username1"><b>First name</b></label>
+                                                                <label for="username_edit"><b>First name</b></label>
                                                                 <input th:name="username" th:value="${user.username}"
                                                                        th:type="text"
-                                                                       class="form-control" id="username1"
+                                                                       class="form-control" id="username_edit"
                                                                        required/>
                                                                 <br>
-                                                                <label for="lastName"><b>Last name</b></label>
+                                                                <label for="lastName_edit"><b>Last name</b></label>
                                                                 <input th:name="name" th:value="${user.name}"
                                                                        th:type="text"
-                                                                       class="form-control" id="lastName"
+                                                                       class="form-control" id="lastName_edit"
                                                                        required/>
                                                                 <br>
-                                                                <label for="age1"><b>Age</b></label>
+                                                                <label for="age_edit"><b>Age</b></label>
                                                                 <input th:name="age" th:value="${user.age}"
                                                                        th:type="number"
                                                                        class="form-control"
-                                                                       id="age1"/>
+                                                                       id="age_edit"/>
                                                                 <br>
-                                                                <label for="email"><b>Email</b></label>
+                                                                <label for="email_edit"><b>Email</b></label>
                                                                 <input th:name="email" th:value="${user.email}"
                                                                        th:type="email"
-                                                                       class="form-control" id="email1"
+                                                                       class="form-control" id="email_edit"
                                                                        required/>
                                                                 <br>
-                                                                <label for="password1"><b>Password</b></label>
+                                                                <label for="password_edit"><b>Password</b></label>
                                                                 <input th:name="password" value="" th:type="password"
                                                                        class="form-control"
-                                                                       id="password1"/>
+                                                                       id="password_edit"/>
                                                                 <br>
+                                                                <label for="role_edit"><b>Role</b></label>
+                                                                <select id="role_edit" th:name="roles" multiple class="form-control form-control-sm"
+                                                                        size="2" aria-label="size 2 select example">
+                                                                    <option th:each="role:${roleAll}" th:value="${{role.getId()}}" th:text="${role.toString()}"/>
+                                                                </select>
 
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
@@ -138,9 +143,9 @@
                                     </div>
                                 </td>
                                 <td><a style="color: white" class="btn btn-danger" data-toggle="modal"
-                                       th:data-target="${'#deleteModal'+ user.id}">delete</a>
+                                       th:data-target="${'#deleteModal' + user.id}">delete</a>
                                     <div aria-hidden="true" aria-labelledby="editModalLabel" id="deleteModal"
-                                         tabindex="-1" class="modal fade" th:id="${'deleteModal'+user.id}">
+                                         tabindex="-1" class="modal fade" th:id="${'deleteModal' + user.id}">
                                         <div class="modal-dialog" modal-dialog-centered>
                                             <div class="modal-content">
                                                     <div class="modal-header">
@@ -187,12 +192,18 @@
                                                                        id="password_delete"
                                                                        disabled/>
                                                                 <br>
+                                                                <label for="role_delete"><b>Role</b></label>
+                                                                <select id="role_delete" multiple class="form-control form-control-sm"
+                                                                        size="2" aria-label="size 2 select example" disabled>
+                                                                    <option th:each="role:${roleAll}" th:text="${role.toString()}"/>
+                                                                </select>
+
 
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary"
                                                                             data-dismiss="modal">Close
                                                                     </button>
-                                                                    <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.getId()})}">
+                                                                    <form th:method="DELETE" th:action="@{/admin/users/{id}(id=${user.id})}">
                                                                     <button type="submit" style="color: white" class="btn btn-danger">
                                                                         delete
                                                                     </button>
@@ -241,9 +252,9 @@
                                        id="password" required/>
                                 <br>
                                 <label for="role"><b>Role</b></label>
-                                <select id="role" th:field="*{roles}" multiple class="form-control form-control-sm"
+                                <select id="role" th:name="roles" multiple class="form-control form-control-sm"
                                         size="2" aria-label="size 2 select example">
-                                    <option th:each="role:${roles}" th:value="${{role}}" th:text="${role.authority}"/>
+                                    <option th:each="role:${roleAll}" th:value="${{role.getId()}}" th:text="${role.toString()}"/>
                                 </select>
                                 <br>
 

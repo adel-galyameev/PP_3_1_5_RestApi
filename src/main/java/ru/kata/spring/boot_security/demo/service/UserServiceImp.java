@@ -33,12 +33,6 @@ public class UserServiceImp implements UserService{
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public User getUser(Long id) {
-        return userRepository.getById(id);
-    }
-
-    @Override
     @Transactional
     public void update(User user) {
         userRepository.save(user);
