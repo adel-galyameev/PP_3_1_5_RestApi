@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +43,12 @@ public class UserServiceImp implements UserService{
     @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public User getById(Long id) {
+        return userRepository.findById(id).get();
     }
 
 
